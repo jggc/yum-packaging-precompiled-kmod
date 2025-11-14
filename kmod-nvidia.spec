@@ -18,7 +18,8 @@
 # there's no --define="kernel x.y.z" passed to rpmbuild
 %define kmod_kernel		%{?kernel}%{?!kernel:3.10.0}
 %define kmod_kernel_release	%{?kernel_release}%{?!kernel_release:862}
-%define kmod_kernel_version	%{kmod_kernel}-%{kmod_kernel_release}%{kmod_dist}
+# MODIFIED: Add a dot to correctly join the kernel release and dist tag for el10.
+%define kmod_kernel_version	%{kmod_kernel}-%{kmod_kernel_release}.%{kmod_dist}
 %define kmod_kbuild_dir		drivers/video/nvidia
 %define kmod_module_path	/lib/modules/%{kmod_kernel_version}.%{_arch}/extra/%{kmod_kbuild_dir}
 %define kmod_share_dir		%{_prefix}/share/nvidia-%{kmod_kernel_version}
@@ -391,5 +392,3 @@ rm -rf $RPM_BUILD_ROOT
 
 * Thu Mar 07 2019 Kevin Mittman <kmittman@nvidia.com>
  - Initial .spec from Timm Bäder
-
-
